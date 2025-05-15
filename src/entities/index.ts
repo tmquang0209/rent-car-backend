@@ -1,0 +1,4 @@
+export * from './permission.entity';
+export * from './role-permissions.entity';
+export * from './role.entity';
+export * from './user.entity';
