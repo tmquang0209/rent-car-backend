@@ -2,8 +2,6 @@ import { PermissionKeys } from '@common/enums';
 import { PermissionEntity, RoleEntity, RolePermissionsEntity } from '@entities';
 
 export class RolePermissionsSeeder {
-  constructor() {}
-
   async truncate() {
     await RolePermissionsEntity.sequelize?.query('SET FOREIGN_KEY_CHECKS = 0;');
     await RolePermissionsEntity.destroy({

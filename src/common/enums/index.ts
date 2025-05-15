@@ -1,4 +1,7 @@
+export * from './hiring.enum';
 export * from './permissions.enum';
+export * from './review.enum';
+export * from './vehicle.enum';
 
 export const ALLOW_UNAUTHORIZED_KEY = 'allowUnauthorized';
 

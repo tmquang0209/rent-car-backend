@@ -2,10 +2,17 @@ import { databaseConfig } from '@common/database';
 import { JwtStrategy } from '@common/guards';
 import { AuthController, UploadController, UserController } from '@controllers';
 import {
+  CategoryEntity,
+  HiringEntity,
+  NotificationEntity,
   PermissionEntity,
+  ReviewEntity,
   RoleEntity,
   RolePermissionsEntity,
   UserEntity,
+  VehicleCategoryEntity,
+  VehicleEntity,
+  VehicleImageEntity,
 } from '@entities';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
@@ -42,6 +49,13 @@ import { RoleController } from './controllers/role.controller';
       RoleEntity,
       RolePermissionsEntity,
       PermissionEntity,
+      VehicleEntity,
+      CategoryEntity,
+      VehicleCategoryEntity,
+      HiringEntity,
+      ReviewEntity,
+      NotificationEntity,
+      VehicleImageEntity,
     ]),
     SequelizeModule.forRootAsync({
       useFactory: databaseConfig,

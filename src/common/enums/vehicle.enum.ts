@@ -1,0 +1,34 @@
+export enum ETransmission {
+  MANUAL = 'MANUAL',
+  AUTOMATIC = 'AUTOMATIC',
+  SEMI_AUTOMATIC = 'SEMI_AUTOMATIC',
+}
+
+export enum EFuelType {
+  PETROL = 'PETROL',
+  DIESEL = 'DIESEL',
+  ELECTRIC = 'ELECTRIC',
+  HYBRID = 'HYBRID',
+  LPG = 'LPG',
+  CNG = 'CNG',
+  ETHANOL = 'ETHANOL',
+  BIOFUEL = 'BIOFUEL',
+  HYDROGEN = 'HYDROGEN',
+  OTHER = 'OTHER',
+}
+
+export enum EVehicleStatus {
+  AVAILABLE = 'AVAILABLE',
+  UNAVAILABLE = 'UNAVAILABLE',
+  UNDER_MAINTENANCE = 'UNDER_MAINTENANCE',
+}
+
+export enum EVehicleType {
+  SEDAN = 'SEDAN',
+  SUV = 'SUV',
+  TRUCK = 'TRUCK',
+  VAN = 'VAN',
+  MOTORCYCLE = 'MOTORCYCLE',
+  BUS = 'BUS',
+  OTHER = 'OTHER',
+}
