@@ -1,12 +1,13 @@
 import { BaseEntity } from '@common/database';
 import { EFuelType, ETransmission, EVehicleStatus } from '@common/enums';
-import { Column, DataType, Table } from 'sequelize-typescript';
+import { UserEntity } from '@entities';
+import { BelongsTo, Column, DataType, Table } from 'sequelize-typescript';
 
 @Table({ tableName: 'vehicles', timestamps: true })
 export class VehicleEntity extends BaseEntity<VehicleEntity> {
   @Column({
     field: 'owner_id',
-    type: DataType.STRING,
+    type: DataType.UUID,
     allowNull: false,
   })
   declare ownerId: string;
@@ -115,17 +116,17 @@ export class VehicleEntity extends BaseEntity<VehicleEntity> {
   })
   declare status: EVehicleStatus;
 
-  //   @BelongsTo(() => UserEntity, {
-  //     foreignKey: 'ownerId',
-  //     targetKey: 'id',
-  //     as: 'owner',
-  //   })
-  //   declare owner: UserEntity;
+  @BelongsTo(() => UserEntity, {
+    foreignKey: 'ownerId',
+    targetKey: 'id',
+    as: 'owner',
+  })
+  declare owner: UserEntity;
 
-  //   @BelongsTo(() => VehicleCategoryEntity, {
-  //     foreignKey: 'vehicleId',
-  //     targetKey: 'vehicleId',
-  //     as: 'vehicleCategory',
-  //   })
-  //   declare vehicleCategory: VehicleCategoryEntity[];
+  // @BelongsTo(() => VehicleCategoryEntity, {
+  //   foreignKey: 'vehicleId',
+  //   targetKey: 'vehicleId',
+  //   as: 'vehicleCategory',
+  // })
+  // declare vehicleCategory: VehicleCategoryEntity[];
 }

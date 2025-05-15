@@ -1,5 +1,6 @@
 import { BaseEntity } from '@common/database';
-import { Column, DataType, Table } from 'sequelize-typescript';
+import { VehicleCategoryEntity } from '@entities';
+import { Column, DataType, HasMany, Table } from 'sequelize-typescript';
 
 @Table({
   tableName: 'categories',
@@ -28,6 +29,6 @@ export class CategoryEntity extends BaseEntity<CategoryEntity> {
   })
   declare isActive: boolean;
 
-  //   @HasMany(() => VehicleCategoryEntity, 'categoryId')
-  //   vehicleCategories: VehicleCategoryEntity[];
+  @HasMany(() => VehicleCategoryEntity, 'categoryId')
+  vehicleCategories: VehicleCategoryEntity[];
 }

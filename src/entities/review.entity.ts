@@ -1,5 +1,6 @@
 import { BaseEntity } from '@common/database';
 import { EReviewStatus } from '@common/enums';
+import { HiringEntity, UserEntity } from '@entities';
 import {
   BelongsTo,
   Column,
@@ -7,8 +8,6 @@ import {
   ForeignKey,
   Table,
 } from 'sequelize-typescript';
-import { HiringEntity } from './hiring.entity';
-import { UserEntity } from './user.entity';
 
 @Table({
   tableName: 'reviews',
