@@ -1,7 +1,9 @@
 import { PermissionKeys } from '@common/enums';
 import { PermissionEntity } from '@entities';
 import { Logger } from '@nestjs/common';
+
 export const permissionSeed = [
+  // === USER ===
   {
     code: PermissionKeys.USER_CREATE,
     name: 'Tạo người dùng',
@@ -23,76 +25,6 @@ export const permissionSeed = [
     description: 'Cho phép xóa người dùng khỏi hệ thống',
   },
   {
-    code: PermissionKeys.EQUIPMENT_CREATE,
-    name: 'Thêm thiết bị',
-    description: 'Cho phép thêm thiết bị mới vào hệ thống',
-  },
-  {
-    code: PermissionKeys.EQUIPMENT_READ,
-    name: 'Xem thiết bị',
-    description: 'Cho phép xem danh sách và thông tin thiết bị',
-  },
-  {
-    code: PermissionKeys.EQUIPMENT_UPDATE,
-    name: 'Cập nhật thiết bị',
-    description: 'Cho phép cập nhật thông tin thiết bị',
-  },
-  {
-    code: PermissionKeys.EQUIPMENT_DELETE,
-    name: 'Xóa thiết bị',
-    description: 'Cho phép xóa thiết bị khỏi hệ thống',
-  },
-  {
-    code: PermissionKeys.ROLE_CREATE,
-    name: 'Tạo vai trò',
-    description: 'Cho phép tạo vai trò mới',
-  },
-  {
-    code: PermissionKeys.ROLE_READ,
-    name: 'Xem vai trò',
-    description: 'Cho phép xem danh sách và thông tin vai trò',
-  },
-  {
-    code: PermissionKeys.ROLE_UPDATE,
-    name: 'Cập nhật vai trò',
-    description: 'Cho phép cập nhật thông tin vai trò',
-  },
-  {
-    code: PermissionKeys.ROLE_DELETE,
-    name: 'Xóa vai trò',
-    description: 'Cho phép xóa vai trò khỏi hệ thống',
-  },
-  {
-    code: PermissionKeys.PERMISSION_CREATE,
-    name: 'Tạo quyền',
-    description: 'Cho phép tạo quyền mới',
-  },
-  {
-    code: PermissionKeys.PERMISSION_READ,
-    name: 'Xem quyền',
-    description: 'Cho phép xem danh sách và thông tin quyền',
-  },
-  {
-    code: PermissionKeys.PERMISSION_UPDATE,
-    name: 'Cập nhật quyền',
-    description: 'Cho phép cập nhật thông tin quyền',
-  },
-  {
-    code: PermissionKeys.PERMISSION_DELETE,
-    name: 'Xóa quyền',
-    description: 'Cho phép xóa quyền khỏi hệ thống',
-  },
-  {
-    code: PermissionKeys.ROLE_PERMISSION_ASSIGN,
-    name: 'Gán quyền cho vai trò',
-    description: 'Cho phép gán quyền cho vai trò',
-  },
-  {
-    code: PermissionKeys.ROLE_PERMISSION_REVOKE,
-    name: 'Thu hồi quyền từ vai trò',
-    description: 'Cho phép thu hồi quyền từ vai trò',
-  },
-  {
     code: PermissionKeys.USER_ROLE_ASSIGN,
     name: 'Gán vai trò cho người dùng',
     description: 'Cho phép gán vai trò cho người dùng',
@@ -102,95 +34,168 @@ export const permissionSeed = [
     name: 'Thu hồi vai trò từ người dùng',
     description: 'Cho phép thu hồi vai trò từ người dùng',
   },
+
+  // === VEHICLE ===
   {
-    code: PermissionKeys.INTERFACE_READ,
-    name: 'Xem giao diện',
-    description: 'Cho phép xem danh sách và thông tin giao diện',
+    code: PermissionKeys.VEHICLE_CREATE,
+    name: 'Thêm xe',
+    description: 'Cho phép thêm xe mới vào hệ thống',
   },
   {
-    code: PermissionKeys.TRAINING_CREATE,
-    name: 'Tạo chương trình huấn luyện',
-    description: 'Cho phép tạo chương trình huấn luyện mới',
+    code: PermissionKeys.VEHICLE_READ,
+    name: 'Xem xe',
+    description: 'Cho phép xem danh sách và thông tin xe',
   },
   {
-    code: PermissionKeys.TRAINING_READ,
-    name: 'Xem chương trình huấn luyện',
-    description: 'Cho phép xem danh sách và thông tin chương trình huấn luyện',
+    code: PermissionKeys.VEHICLE_UPDATE,
+    name: 'Cập nhật xe',
+    description: 'Cho phép cập nhật thông tin xe',
   },
   {
-    code: PermissionKeys.TRAINING_UPDATE,
-    name: 'Cập nhật chương trình huấn luyện',
-    description: 'Cho phép cập nhật thông tin chương trình huấn luyện',
+    code: PermissionKeys.VEHICLE_DELETE,
+    name: 'Xóa xe',
+    description: 'Cho phép xóa xe khỏi hệ thống',
+  },
+
+  // === CATEGORY ===
+  {
+    code: PermissionKeys.CATEGORY_CREATE,
+    name: 'Tạo danh mục',
+    description: 'Cho phép tạo danh mục mới cho xe',
   },
   {
-    code: PermissionKeys.TRAINING_DELETE,
-    name: 'Xóa chương trình huấn luyện',
-    description: 'Cho phép xóa chương trình huấn luyện khỏi hệ thống',
+    code: PermissionKeys.CATEGORY_READ,
+    name: 'Xem danh mục',
+    description: 'Cho phép xem danh sách danh mục',
   },
   {
-    code: PermissionKeys.DIAGRAM_CREATE,
-    name: 'Tạo sơ đồ',
-    description: 'Cho phép tạo sơ đồ mới',
+    code: PermissionKeys.CATEGORY_UPDATE,
+    name: 'Cập nhật danh mục',
+    description: 'Cho phép chỉnh sửa thông tin danh mục',
   },
   {
-    code: PermissionKeys.DIAGRAM_READ,
-    name: 'Xem sơ đồ',
-    description: 'Cho phép xem danh sách và thông tin sơ đồ',
+    code: PermissionKeys.CATEGORY_DELETE,
+    name: 'Xóa danh mục',
+    description: 'Cho phép xóa danh mục khỏi hệ thống',
+  },
+
+  // === HIRING ===
+  {
+    code: PermissionKeys.HIRING_CREATE,
+    name: 'Tạo đơn thuê xe',
+    description: 'Cho phép người dùng đặt thuê xe',
   },
   {
-    code: PermissionKeys.DIAGRAM_UPDATE,
-    name: 'Cập nhật sơ đồ',
-    description: 'Cho phép cập nhật thông tin sơ đồ',
+    code: PermissionKeys.HIRING_READ,
+    name: 'Xem đơn thuê xe',
+    description: 'Cho phép xem danh sách và chi tiết đơn thuê xe',
   },
   {
-    code: PermissionKeys.DIAGRAM_DELETE,
-    name: 'Xóa sơ đồ',
-    description: 'Cho phép xóa sơ đồ khỏi hệ thống',
+    code: PermissionKeys.HIRING_UPDATE,
+    name: 'Cập nhật đơn thuê xe',
+    description: 'Cho phép chỉnh sửa đơn thuê xe',
   },
   {
-    code: PermissionKeys.DOCUMENT_READ,
-    name: 'Xem tài liệu',
-    description: 'Cho phép xem danh sách và thông tin tài liệu',
+    code: PermissionKeys.HIRING_DELETE,
+    name: 'Xóa đơn thuê xe',
+    description: 'Cho phép hủy/xóa đơn thuê xe',
+  },
+
+  // === REVIEW ===
+  {
+    code: PermissionKeys.REVIEW_CREATE,
+    name: 'Tạo đánh giá',
+    description: 'Cho phép người dùng gửi đánh giá sau khi thuê xe',
   },
   {
-    code: PermissionKeys.DOCUMENT_CREATE,
-    name: 'Tạo tài liệu',
-    description: 'Cho phép tạo tài liệu mới',
+    code: PermissionKeys.REVIEW_READ,
+    name: 'Xem đánh giá',
+    description: 'Cho phép xem các đánh giá của người dùng',
   },
   {
-    code: PermissionKeys.DOCUMENT_UPDATE,
-    name: 'Cập nhật tài liệu',
-    description: 'Cho phép cập nhật thông tin tài liệu',
+    code: PermissionKeys.REVIEW_UPDATE,
+    name: 'Cập nhật đánh giá',
+    description: 'Cho phép chỉnh sửa đánh giá đã gửi',
   },
   {
-    code: PermissionKeys.DOCUMENT_DELETE,
-    name: 'Xóa tài liệu',
-    description: 'Cho phép xóa tài liệu khỏi hệ thống',
+    code: PermissionKeys.REVIEW_DELETE,
+    name: 'Xóa đánh giá',
+    description: 'Cho phép xóa đánh giá khỏi hệ thống',
+  },
+
+  // === NOTIFICATION ===
+  {
+    code: PermissionKeys.NOTIFICATION_READ,
+    name: 'Xem thông báo',
+    description: 'Cho phép xem danh sách thông báo',
   },
   {
-    code: PermissionKeys.QUIZZ_CREATE,
-    name: 'Tạo câu hỏi trắc nghiệm',
-    description: 'Cho phép tạo câu hỏi trắc nghiệm mới',
+    code: PermissionKeys.NOTIFICATION_SEND,
+    name: 'Gửi thông báo',
+    description: 'Cho phép gửi thông báo đến người dùng',
   },
   {
-    code: PermissionKeys.QUIZZ_READ,
-    name: 'Làm trắc nghiệm',
-    description: 'Cho phép làm trắc nghiệm',
+    code: PermissionKeys.NOTIFICATION_DELETE,
+    name: 'Xóa thông báo',
+    description: 'Cho phép xóa thông báo khỏi hệ thống',
+  },
+
+  // === ROLE ===
+  {
+    code: PermissionKeys.ROLE_CREATE,
+    name: 'Tạo vai trò',
+    description: 'Cho phép tạo vai trò người dùng mới',
   },
   {
-    code: PermissionKeys.QUIZZ_UPDATE,
-    name: 'Cập nhật câu hỏi trắc nghiệm',
-    description: 'Cho phép cập nhật thông tin câu hỏi trắc nghiệm',
+    code: PermissionKeys.ROLE_READ,
+    name: 'Xem vai trò',
+    description: 'Cho phép xem danh sách và chi tiết vai trò',
   },
   {
-    code: PermissionKeys.QUIZZ_DELETE,
-    name: 'Xóa câu hỏi trắc nghiệm',
-    description: 'Cho phép xóa câu hỏi trắc nghiệm khỏi hệ thống',
+    code: PermissionKeys.ROLE_UPDATE,
+    name: 'Cập nhật vai trò',
+    description: 'Cho phép chỉnh sửa thông tin vai trò',
+  },
+  {
+    code: PermissionKeys.ROLE_DELETE,
+    name: 'Xóa vai trò',
+    description: 'Cho phép xóa vai trò khỏi hệ thống',
+  },
+
+  // === PERMISSION ===
+  {
+    code: PermissionKeys.PERMISSION_CREATE,
+    name: 'Tạo quyền',
+    description: 'Cho phép tạo quyền truy cập mới',
+  },
+  {
+    code: PermissionKeys.PERMISSION_READ,
+    name: 'Xem quyền',
+    description: 'Cho phép xem danh sách và thông tin quyền',
+  },
+  {
+    code: PermissionKeys.PERMISSION_UPDATE,
+    name: 'Cập nhật quyền',
+    description: 'Cho phép chỉnh sửa thông tin quyền',
+  },
+  {
+    code: PermissionKeys.PERMISSION_DELETE,
+    name: 'Xóa quyền',
+    description: 'Cho phép xóa quyền khỏi hệ thống',
+  },
+  {
+    code: PermissionKeys.ROLE_PERMISSION_ASSIGN,
+    name: 'Gán quyền cho vai trò',
+    description: 'Cho phép gán quyền cho một vai trò cụ thể',
+  },
+  {
+    code: PermissionKeys.ROLE_PERMISSION_REVOKE,
+    name: 'Thu hồi quyền từ vai trò',
+    description: 'Cho phép thu hồi quyền khỏi vai trò',
   },
 ];
-export class PermissionSeeder {
-  constructor() {}
 
+export class PermissionSeeder {
   async truncate() {
     await PermissionEntity.sequelize?.query('SET FOREIGN_KEY_CHECKS = 0;');
     await PermissionEntity.destroy({
@@ -201,7 +206,6 @@ export class PermissionSeeder {
   }
 
   async run() {
-    // Truncate the table before seeding
     await this.truncate();
 
     await PermissionEntity.bulkCreate(permissionSeed as PermissionEntity[], {

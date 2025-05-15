@@ -6,25 +6,12 @@ export const roleSeeds = [
     description: 'Vai trò quản trị viên với quyền truy cập đầy đủ',
   },
   {
-    code: 'trac_thu',
-    name: 'Trắc thủ',
-    description: 'Có quyền xem giao diện và huấn luyện',
-  },
-  {
-    code: 'sy_quan_rada',
-    name: 'Sỹ quan radar',
-    description: 'Có quyền xem giao diện, huấn luyện, tài liệu',
-  },
-  {
-    code: 'ky_su_nvcm',
-    name: 'Kỹ sư, nhân viên chuyên môn',
-    description:
-      'Vai trò kỹ sư, nhân viên chuyên môn truy cập vào giao diện, huấn luyện, tài liệu, sơ đồ',
+    code: 'renter',
+    name: 'Người thuê xe',
+    description: 'Vai trò người thuê xe với quyền truy cập hạn chế',
   },
 ];
 export class RoleSeeder {
-  constructor() {}
-
   async truncate() {
     await RoleEntity.sequelize?.query('SET FOREIGN_KEY_CHECKS = 0;');
     await RoleEntity.destroy({

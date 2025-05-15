@@ -1,8 +1,6 @@
 import { RoleEntity, UserEntity } from '@entities';
 
 export class UserSeeder {
-  constructor() {}
-
   async run() {
     const roles = await RoleEntity.findAll();
     const adminUser = {
@@ -27,10 +25,10 @@ export class UserSeeder {
     }
 
     const userUser = {
-      fullName: 'Regular User',
+      fullName: 'Renter User',
       email: 'user@example.com',
       password: 'user123',
-      roleId: roles.find((role) => role.code === 'trac_thu')?.id || '',
+      roleId: roles.find((role) => role.code === 'renter')?.id,
     };
     const existingUserUser = await UserEntity.findOne({
       where: { email: userUser.email },
@@ -40,38 +38,6 @@ export class UserSeeder {
     } else {
       await UserEntity.create(userUser as UserEntity);
       console.log(`User with email ${userUser.email} created.`);
-    }
-
-    const radarEmployeeUser = {
-      fullName: 'Radar Employee User',
-      email: 'radar@example.com',
-      password: 'radar123',
-      roleId: roles.find((role) => role.code === 'sy_quan_rada')?.id || '',
-    };
-    const existingRadarEmployeeUser = await UserEntity.findOne({
-      where: { email: radarEmployeeUser.email },
-    });
-    if (existingRadarEmployeeUser) {
-      console.log(`User with email ${radarEmployeeUser.email} already exists.`);
-    } else {
-      await UserEntity.create(radarEmployeeUser as UserEntity);
-      console.log(`User with email ${radarEmployeeUser.email} created.`);
-    }
-
-    const engineerUser = {
-      fullName: 'Engineer User',
-      email: 'engineer@example.com',
-      password: 'engineer123',
-      roleId: roles.find((role) => role.code === 'ky_su_nvcm')?.id || '',
-    };
-    const existingEngineerUser = await UserEntity.findOne({
-      where: { email: engineerUser.email },
-    });
-    if (existingEngineerUser) {
-      console.log(`User with email ${engineerUser.email} already exists.`);
-    } else {
-      await UserEntity.create(engineerUser as UserEntity);
-      console.log(`User with email ${engineerUser.email} created.`);
     }
   }
 }

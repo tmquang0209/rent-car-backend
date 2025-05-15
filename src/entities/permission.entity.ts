@@ -49,7 +49,8 @@ export class PermissionEntity extends BaseEntity<PermissionEntity> {
 
   @BeforeBulkCreate
   static verifyCodeFormatBulk(permissions: PermissionEntity[]) {
-    const regex = /^[a-zA-Z0-9-]+:(create|read|update|delete|assign|revoke)$/;
+    const regex =
+      /^[a-zA-Z0-9-]+:(create|read|update|delete|assign|revoke|send)$/;
 
     for (const permission of permissions) {
       if (!regex.test(permission.code)) {

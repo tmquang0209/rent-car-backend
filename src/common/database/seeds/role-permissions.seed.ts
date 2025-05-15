@@ -31,13 +31,13 @@ export class RolePermissionsSeeder {
             permissionId: permission.id,
           } as RolePermissionsEntity);
         }
-      } else if (role.code === 'trac_thu') {
-        // interface and training
+      } else if (role.code === 'renter') {
+        // vehicle (read), category (read), hiring (read, create), review (read, create), notification (read, update)
         rolePermissions.push({
           roleId: role.id,
           permissionId: permissions.find(
             (permission) =>
-              permission.code === PermissionKeys.INTERFACE_READ.toString(),
+              permission.code === PermissionKeys.VEHICLE_READ.toString(),
           )?.id,
         } as RolePermissionsEntity);
 
@@ -45,16 +45,7 @@ export class RolePermissionsSeeder {
           roleId: role.id,
           permissionId: permissions.find(
             (permission) =>
-              permission.code === PermissionKeys.TRAINING_READ.toString(),
-          )?.id,
-        } as RolePermissionsEntity);
-      } else if (role.code === 'sy_quan_rada') {
-        // interface, training and document
-        rolePermissions.push({
-          roleId: role.id,
-          permissionId: permissions.find(
-            (permission) =>
-              permission.code === PermissionKeys.INTERFACE_READ.toString(),
+              permission.code === PermissionKeys.CATEGORY_READ.toString(),
           )?.id,
         } as RolePermissionsEntity);
 
@@ -62,7 +53,7 @@ export class RolePermissionsSeeder {
           roleId: role.id,
           permissionId: permissions.find(
             (permission) =>
-              permission.code === PermissionKeys.TRAINING_READ.toString(),
+              permission.code === PermissionKeys.HIRING_READ.toString(),
           )?.id,
         } as RolePermissionsEntity);
 
@@ -70,16 +61,7 @@ export class RolePermissionsSeeder {
           roleId: role.id,
           permissionId: permissions.find(
             (permission) =>
-              permission.code === PermissionKeys.DOCUMENT_READ.toString(),
-          )?.id,
-        } as RolePermissionsEntity);
-      } else if (role.code === 'ky_su_nvcm') {
-        // interface, training, document and diagram
-        rolePermissions.push({
-          roleId: role.id,
-          permissionId: permissions.find(
-            (permission) =>
-              permission.code === PermissionKeys.INTERFACE_READ.toString(),
+              permission.code === PermissionKeys.REVIEW_READ.toString(),
           )?.id,
         } as RolePermissionsEntity);
 
@@ -87,28 +69,11 @@ export class RolePermissionsSeeder {
           roleId: role.id,
           permissionId: permissions.find(
             (permission) =>
-              permission.code === PermissionKeys.TRAINING_READ.toString(),
-          )?.id,
-        } as RolePermissionsEntity);
-
-        rolePermissions.push({
-          roleId: role.id,
-          permissionId: permissions.find(
-            (permission) =>
-              permission.code === PermissionKeys.DOCUMENT_READ.toString(),
-          )?.id,
-        } as RolePermissionsEntity);
-
-        rolePermissions.push({
-          roleId: role.id,
-          permissionId: permissions.find(
-            (permission) =>
-              permission.code === PermissionKeys.DIAGRAM_READ.toString(),
+              permission.code === PermissionKeys.NOTIFICATION_READ.toString(),
           )?.id,
         } as RolePermissionsEntity);
       }
     }
-
     await RolePermissionsEntity.bulkCreate(rolePermissions);
   }
 }

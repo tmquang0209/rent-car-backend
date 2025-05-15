@@ -1,5 +1,3 @@
-export * from './exam.enum';
-export * from './file.enum';
 export * from './permissions.enum';
 
 export const ALLOW_UNAUTHORIZED_KEY = 'allowUnauthorized';

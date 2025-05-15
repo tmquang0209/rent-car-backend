@@ -1,12 +1,5 @@
 import { BaseEntity } from '@common/database';
-import {
-  EquipmentEntity,
-  ExamEntity,
-  FunctionDiagramEntity,
-  NewsEntity,
-  RoleEntity,
-  TrainingMaterialEntity,
-} from '@entities';
+import { RoleEntity } from '@entities';
 import * as bcrypt from 'bcryptjs';
 import {
   BeforeBulkCreate,
@@ -16,7 +9,6 @@ import {
   Column,
   DataType,
   ForeignKey,
-  HasMany,
   Table,
 } from 'sequelize-typescript';
 
@@ -61,42 +53,6 @@ export class UserEntity extends BaseEntity<UserEntity> {
 
   @BelongsTo(() => RoleEntity, 'roleId')
   declare role: RoleEntity;
-
-  @HasMany(() => EquipmentEntity, {
-    foreignKey: 'createdBy',
-    sourceKey: 'id',
-  })
-  declare equipments: EquipmentEntity[];
-
-  @HasMany(() => FunctionDiagramEntity, {
-    foreignKey: 'createdBy',
-    sourceKey: 'id',
-  })
-  declare functionDiagrams: FunctionDiagramEntity[];
-
-  @HasMany(() => EquipmentEntity, {
-    foreignKey: 'updatedBy',
-    sourceKey: 'id',
-  })
-  declare updatedEquipments: EquipmentEntity[];
-
-  @HasMany(() => TrainingMaterialEntity, {
-    foreignKey: 'createdBy',
-    sourceKey: 'id',
-  })
-  declare trainingMaterials: TrainingMaterialEntity[];
-
-  @HasMany(() => NewsEntity, {
-    foreignKey: 'createdBy',
-    sourceKey: 'id',
-  })
-  declare news: NewsEntity[];
-
-  @HasMany(() => ExamEntity, {
-    foreignKey: 'createdBy',
-    sourceKey: 'id',
-  })
-  declare exams: ExamEntity[];
 
   @BeforeCreate
   static async hashPassword(user: UserEntity) {
