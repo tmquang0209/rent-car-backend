@@ -28,10 +28,11 @@ export class CategoryUpdateDto extends CategoryCreateDto {
   readonly id: string;
 }
 
-export class CategoryDeleteDto {
+export class CategoryDetailDto {
   @IsString()
   readonly id: string;
 }
+export class CategoryDeleteDto extends CategoryDetailDto {}
 
 export class CategoryListRequestDto extends PaginationDto {
   @IsOptional()

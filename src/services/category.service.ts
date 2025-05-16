@@ -1,12 +1,13 @@
 import {
   CategoryCreateDto,
   CategoryDeleteDto,
+  CategoryDetailDto,
   CategoryListRequestDto,
   CategoryListResponseDto,
   CategoryUpdateDto,
 } from '@dto';
 import { CategoryEntity } from '@entities';
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
@@ -17,17 +18,20 @@ export class CategoryService {
   ) {}
 
   async createCategory(params: CategoryCreateDto): Promise<CategoryEntity> {
+    console.log('🚀 ~ CategoryService ~ createCategory ~ params:', params);
     const existingCategory = await this.categoryModel.findOne({
       where: { name: params.name },
     });
     if (existingCategory)
-      throw new Error(`Danh mục với tên "${params.name}" đã tồn tại.`);
+      throw new ConflictException(
+        `Danh mục với tên "${params.name}" đã tồn tại.`,
+      );
 
     return this.categoryModel.create(params as CategoryEntity);
   }
 
-  async getCategoryById(id: string): Promise<CategoryEntity> {
-    const category = await this.categoryModel.findByPk(id);
+  async getCategoryById(params: CategoryDetailDto): Promise<CategoryEntity> {
+    const category = await this.categoryModel.findByPk(params.id);
     if (!category) throw new Error(`Danh mục không tồn tại.`);
     return category;
   }
@@ -37,7 +41,9 @@ export class CategoryService {
   ): Promise<CategoryListResponseDto> {
     const { page, pageSize } = params;
 
-    if (page === -1 && pageSize === -1) {
+    if ((page === -1 && pageSize === -1) || !page || !pageSize) {
+      console.log('run this');
+
       const categories = await this.categoryModel.findAll();
       return {
         total: categories.length,
@@ -61,7 +67,7 @@ export class CategoryService {
   }
 
   async updateCategory(params: CategoryUpdateDto): Promise<CategoryEntity> {
-    const category = await this.getCategoryById(params.id);
+    const category = await this.getCategoryById({ id: params.id });
 
     const existingCategory = await this.categoryModel.findOne({
       where: { name: params.name, id: { $ne: params.id } },
@@ -76,7 +82,7 @@ export class CategoryService {
   }
 
   async deleteCategory(params: CategoryDeleteDto): Promise<void> {
-    const category = await this.getCategoryById(params.id);
+    const category = await this.getCategoryById({ id: params.id });
     await category.destroy();
   }
 }
