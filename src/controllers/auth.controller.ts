@@ -1,7 +1,7 @@
 import { ResponseMessage } from '@common/decorators';
 import { AllowUnauthorized } from '@common/decorators/allow-unauthorized.decorator';
 import { RefreshTokenGuard } from '@common/guards';
-import { ForgotPasswordDto, LoginDto } from '@dto';
+import { ForgotPasswordDto, LoginDto, RegisterDto } from '@dto';
 import {
   Body,
   Controller,
@@ -29,11 +29,10 @@ export class AuthController {
     return this.authService.login(params);
   }
 
-  // @Post('register')
-  // async register(@Body() params: RegisterDto) {
-  //   await this.mailService.sendWelcomeEmail(params.email, params.fullName);
-  //   return { message: 'Registration complete' };
-  // }
+  @Post('register')
+  register(@Body() params: RegisterDto) {
+    return this.authService.register(params);
+  }
 
   @UseGuards(RefreshTokenGuard)
   @Post('refresh')

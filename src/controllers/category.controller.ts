@@ -1,4 +1,8 @@
-import { Permissions, ResponseMessage } from '@common/decorators';
+import {
+  AllowUnauthorized,
+  Permissions,
+  ResponseMessage,
+} from '@common/decorators';
 import { PermissionKeys } from '@common/enums';
 import {
   CategoryCreateDto,
@@ -29,14 +33,16 @@ export class CategoryController {
   async createCategory(@Body() params: CategoryCreateDto) {
     return this.categoryService.createCategory(params);
   }
+
   @Get('list')
   @ResponseMessage('Lấy danh sách danh mục thành công')
-  @Permissions(
-    PermissionKeys.CATEGORY_READ,
-    PermissionKeys.CATEGORY_CREATE,
-    PermissionKeys.CATEGORY_UPDATE,
-    PermissionKeys.CATEGORY_DELETE,
-  )
+  // @Permissions(
+  //   PermissionKeys.CATEGORY_READ,
+  //   PermissionKeys.CATEGORY_CREATE,
+  //   PermissionKeys.CATEGORY_UPDATE,
+  //   PermissionKeys.CATEGORY_DELETE,
+  // )
+  @AllowUnauthorized()
   async getList(@Query() params: CategoryListRequestDto) {
     return this.categoryService.getAllCategories(params);
   }

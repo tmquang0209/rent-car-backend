@@ -1,5 +1,5 @@
 import { generatePassword } from '@common/utils';
-import { BasicInfoDto, ForgotPasswordDto, LoginDto } from '@dto';
+import { BasicInfoDto, ForgotPasswordDto, LoginDto, RegisterDto } from '@dto';
 import { PermissionEntity, RoleEntity, UserEntity } from '@entities';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -145,6 +145,17 @@ export class AuthService {
       },
       accessToken,
     };
+  }
+
+  async register(params: RegisterDto): Promise<{ success: boolean }> {
+    const userExist = await this.userRepo.findOne({
+      where: { email: params.email },
+    });
+    if (userExist) throw new BadRequestException('Email đã tồn tại!');
+
+    await this.userRepo.create(params as UserEntity);
+
+    return { success: true };
   }
 
   async sendNewPassword(params: ForgotPasswordDto): Promise<{

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class LoginDto {
   @IsNotEmpty()
@@ -6,6 +6,25 @@ export class LoginDto {
   readonly email: string;
 
   @IsNotEmpty()
+  readonly password: string;
+}
+
+export class RegisterDto {
+  @IsNotEmpty()
+  @IsEmail(
+    {},
+    {
+      message: 'Email không hợp lệ',
+    },
+  )
+  readonly email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly fullName: string;
+
+  @IsNotEmpty()
+  @IsString()
   readonly password: string;
 }
 

@@ -14,28 +14,28 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('info')
-  @ResponseMessage('Get user info success!')
+  @ResponseMessage('Lấy thông tin người dùng thành công!')
   getUserInfo(@Req() req: Request) {
     const { id: userId } = req['user'] as BasicInfoDto;
     return this.userService.getUserById(userId);
   }
 
   @Post()
-  @ResponseMessage('Create user success!')
+  @ResponseMessage('Tạo tài khoản thành công!')
   @Permissions(PermissionKeys.USER_CREATE)
   createUser(@Body() params: CreateUserDto) {
     return this.userService.createUser(params);
   }
 
   @Post('get-list')
-  @ResponseMessage('Get user list success!')
+  @ResponseMessage('Lấy danh sách người dùng thành công!')
   @Permissions(PermissionKeys.USER_READ)
   getListUsers() {
     return this.userService.getListUsers();
   }
 
   @Put('update')
-  @ResponseMessage('Update user info success!')
+  @ResponseMessage('Cập nhật thông tin người dùng thành công!')
   @Permissions(PermissionKeys.USER_UPDATE)
   updateUser(@Req() req: Request, @Body() params: UpdateUserDto) {
     const { id } = req['user'] as BasicInfoDto;
@@ -43,14 +43,14 @@ export class UserController {
   }
 
   @Post('change-password')
-  @ResponseMessage('Change password success!')
+  @ResponseMessage('Cập nhật mật khẩu thành công!')
   changePassword(@Body() params: ChangePasswordDto, @Req() req: Request) {
     const { id: userId } = req['user'] as BasicInfoDto;
     return this.userService.changePassword(params, userId);
   }
 
   @Get(':id/details')
-  @ResponseMessage('Get user info success!')
+  @ResponseMessage('Lấy thông tin người dùng thành công!')
   @Permissions(PermissionKeys.USER_READ)
   getDetailUser(@Param('id') id: string) {
     return this.userService.getUserById(id);
