@@ -1,5 +1,4 @@
 import { PERMISSION_KEY } from '@common/enums';
-import { BasicInfoDto } from '@dto/auth.dto';
 import { PermissionEntity, RolePermissionsEntity, UserEntity } from '@entities';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -18,11 +17,10 @@ export class PermissionGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
 
-    const user: BasicInfoDto | undefined = request['user'];
+    const user = request['user'];
 
-    // get permissions from user
     const userInfo = await UserEntity.findOne({
-      where: { id: user?.id },
+      where: { id: user?.id }, // was user?.sub (wrong, because sub was not returned)
     });
 
     const permissions = await PermissionEntity.findAll({
@@ -38,12 +36,10 @@ export class PermissionGuard implements CanActivate {
       attributes: ['code'],
     });
 
-    console.log('🚀 ~ PermissionGuard ~ canActivate ~ userInfo:', userInfo);
-
     const hasPermission = permissions.some((permission) => {
       return requiredPermissions.includes(permission.code); // user has the required role
     });
 
-    return Promise.resolve(hasPermission ?? false);
+    return hasPermission ?? false;
   }
 }

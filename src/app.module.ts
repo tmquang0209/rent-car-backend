@@ -1,6 +1,12 @@
 import { databaseConfig } from '@common/database';
 import { JwtStrategy } from '@common/guards';
-import { AuthController, UploadController, UserController } from '@controllers';
+import {
+  AuthController,
+  CategoryController,
+  UploadController,
+  UserController,
+  VehicleController,
+} from '@controllers';
 import {
   CategoryEntity,
   HiringEntity,
@@ -89,6 +95,8 @@ import { RoleController } from './controllers/role.controller';
     AuthController,
     UploadController,
     RoleController,
+    CategoryController,
+    VehicleController,
   ], // need to add controllers here
   providers: [
     AuthService,

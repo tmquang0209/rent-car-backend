@@ -5,6 +5,7 @@ import { PermissionGuard } from '@common/guards/permission.guard';
 import { TransformationInterceptor } from '@common/interceptor';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -28,6 +29,15 @@ async function bootstrap() {
   app.useGlobalGuards(new PermissionGuard(reflector));
 
   app.useGlobalInterceptors(new TransformationInterceptor(reflector));
+
+  const swgBuilder = new DocumentBuilder()
+    .setTitle('Server API docs')
+    .addBearerAuth();
+
+  const swaggerDocument = SwaggerModule.createDocument(app, swgBuilder.build());
+  SwaggerModule.setup('api', app, swaggerDocument, {
+    jsonDocumentUrl: 'api-json',
+  });
 
   await app.listen(process.env.PORT ?? 3000, () => {
     Logger.log(`Server is running on port ${process.env.PORT ?? 3000}`);

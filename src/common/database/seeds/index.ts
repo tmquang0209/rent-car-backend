@@ -5,7 +5,6 @@ import { RoleSeeder } from './role.seed';
 import { UserSeeder } from './user.seed';
 
 export class Seeder {
-  constructor() {}
   async run() {
     const permissionSeeder = new PermissionSeeder();
     const roleSeeder = new RoleSeeder();

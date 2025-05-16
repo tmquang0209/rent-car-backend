@@ -10,7 +10,7 @@ export class UserSeeder {
       birthday: new Date('1990-01-01'),
       address: '123 Admin St, City, Country',
       phoneNumber: '1234567890',
-      roleId: roles.find((role) => role.code === 'admin')?.id || '',
+      roleId: roles.find((role) => role.code === 'admin')?.id,
     };
 
     //   check user
