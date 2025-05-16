@@ -22,10 +22,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { SequelizeModule } from '@nestjs/sequelize';
 import {
   AuthService,
+  CategoryService,
   MailService,
   MinioService,
   RoleService,
   UserService,
+  VehicleService,
 } from '@services';
 import { join } from 'path';
 import { RoleController } from './controllers/role.controller';
@@ -95,6 +97,8 @@ import { RoleController } from './controllers/role.controller';
     MailService,
     RoleService,
     JwtStrategy,
+    CategoryService,
+    VehicleService,
   ], // need to add providers here
 })
 export class AppModule {}
