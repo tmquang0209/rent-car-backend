@@ -9,3 +9,10 @@ export class PaginationDto {
   @IsNumber()
   readonly pageSize: number;
 }
+
+export class PaginationResponseDto<T> {
+  readonly total: number;
+  readonly page: number;
+  readonly pageSize: number;
+  readonly data: T[];
+}

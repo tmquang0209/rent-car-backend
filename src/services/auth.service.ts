@@ -12,9 +12,9 @@ import { MailService } from './mail.service';
 export class AuthService {
   constructor(
     @InjectModel(UserEntity)
-    private userRepo: typeof UserEntity,
+    private readonly userRepo: typeof UserEntity,
     private readonly jwtService: JwtService,
-    private configService: ConfigService,
+    private readonly configService: ConfigService,
     private readonly mailService: MailService,
   ) {}
 

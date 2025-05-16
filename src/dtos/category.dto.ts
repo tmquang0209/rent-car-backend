@@ -1,5 +1,5 @@
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
-import { PaginationDto } from './pagination.dto';
+import { PaginationDto, PaginationResponseDto } from './pagination.dto';
 
 export class CategoryInfoDto {
   readonly id: string;
@@ -42,3 +42,5 @@ export class CategoryListRequestDto extends PaginationDto {
   @IsBoolean()
   readonly isActive: boolean;
 }
+
+export class CategoryListResponseDto extends PaginationResponseDto<CategoryInfoDto> {}

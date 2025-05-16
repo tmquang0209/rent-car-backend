@@ -1,5 +1,10 @@
 import { EFuelType, ETransmission, EVehicleStatus } from '@common/enums';
-import { OwnerInfoDto, PaginationDto } from '@dto';
+import {
+  CategoryInfoDto,
+  OwnerInfoDto,
+  PaginationDto,
+  PaginationResponseDto,
+} from '@dto';
 import {
   IsIn,
   IsNumber,
@@ -26,6 +31,7 @@ export class VehicleInfoDto {
   readonly title: string;
   readonly isActive: boolean;
   readonly status: EVehicleStatus;
+  readonly categories: CategoryInfoDto[];
 }
 
 export class VehicleCreateDto {
@@ -79,6 +85,10 @@ export class VehicleCreateDto {
 
   @IsString({ each: true })
   readonly categories: string[];
+
+  @IsOptional()
+  @IsString({ each: true })
+  readonly images: string[];
 }
 
 export class VehicleUpdateDto extends VehicleCreateDto {
@@ -92,6 +102,10 @@ export class VehicleDeleteDto {
 }
 
 export class VehicleListRequestDto extends PaginationDto {
+  @IsOptional()
+  @IsString()
+  readonly categoryIds: string[];
+
   @IsOptional()
   @IsString()
   readonly name: string;
@@ -124,3 +138,5 @@ export class VehicleListRequestDto extends PaginationDto {
   @IsIn([...Object.values(EVehicleStatus)])
   readonly status: EVehicleStatus;
 }
+
+export class VehicleListResponseDto extends PaginationResponseDto<VehicleInfoDto> {}
