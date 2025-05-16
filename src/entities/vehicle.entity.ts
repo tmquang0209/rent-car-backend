@@ -116,6 +116,14 @@ export class VehicleEntity extends BaseEntity<VehicleEntity> {
   })
   declare status: EVehicleStatus;
 
+  @Column({
+    field: 'mileage',
+    type: DataType.INTEGER,
+    allowNull: false,
+    defaultValue: -1,
+  })
+  declare mileage: number;
+
   @BelongsTo(() => UserEntity, {
     foreignKey: 'ownerId',
     targetKey: 'id',
