@@ -1,24 +1,34 @@
 import { BaseEntity } from '@common/database';
-
 import { EHiringStatus } from '@common/enums';
-
-import { Column, DataType, Table } from 'sequelize-typescript';
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  HasOne,
+  Table,
+} from 'sequelize-typescript';
+import { ReviewEntity } from './review.entity';
+import { UserEntity } from './user.entity';
+import { VehicleEntity } from './vehicle.entity';
 
 @Table({
   tableName: 'hirings',
   timestamps: true,
 })
 export class HiringEntity extends BaseEntity<HiringEntity> {
+  @ForeignKey(() => UserEntity)
   @Column({
     field: 'renter_id',
-    type: DataType.STRING,
+    type: DataType.UUID,
     allowNull: false,
   })
   declare renterId: string;
 
+  @ForeignKey(() => VehicleEntity)
   @Column({
     field: 'vehicle_id',
-    type: DataType.STRING,
+    type: DataType.UUID,
     allowNull: false,
   })
   declare vehicleId: string;
@@ -65,4 +75,16 @@ export class HiringEntity extends BaseEntity<HiringEntity> {
     defaultValue: EHiringStatus.PENDING,
   })
   declare status: EHiringStatus;
+
+  @BelongsTo(() => UserEntity, 'renterId')
+  renter: UserEntity;
+
+  @BelongsTo(() => VehicleEntity, {
+    foreignKey: 'vehicleId',
+    targetKey: 'id',
+  })
+  vehicle: VehicleEntity;
+
+  @HasOne(() => ReviewEntity, 'hiringId')
+  review: ReviewEntity;
 }

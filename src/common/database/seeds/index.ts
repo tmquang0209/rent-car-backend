@@ -1,10 +1,12 @@
 import { Logger } from '@nestjs/common';
 import { CategorySeeder } from './category.seed';
+import { HiringSeeder } from './hiring.seed';
 import { PermissionSeeder } from './permission.seed';
 import { RolePermissionsSeeder } from './role-permissions.seed';
 import { RoleSeeder } from './role.seed';
 import { UserSeeder } from './user.seed';
 import { VehicleSeeder } from './vehicle.seed';
+import { ReviewSeeder } from './review.seed';
 
 export class Seeder {
   async run() {
@@ -14,6 +16,8 @@ export class Seeder {
     const userSeeder = new UserSeeder();
     const categorySeeder = new CategorySeeder();
     const vehicleSeeder = new VehicleSeeder();
+    const hiringSeeder = new HiringSeeder();
+    const reviewSeeder = new ReviewSeeder();
 
     Logger.log('Seeding database...');
     await permissionSeeder.run();
@@ -22,6 +26,8 @@ export class Seeder {
     await userSeeder.run();
     await categorySeeder.run();
     await vehicleSeeder.run();
+    await hiringSeeder.run();
+    await reviewSeeder.run();
 
     Logger.log('Database seeded successfully.');
   }

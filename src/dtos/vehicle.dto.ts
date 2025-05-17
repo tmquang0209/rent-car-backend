@@ -17,7 +17,7 @@ import {
 
 export class VehicleInfoDto {
   readonly id: string;
-  readonly ownerId: OwnerInfoDto;
+  readonly owner: OwnerInfoDto;
   readonly name: string;
   readonly brand: string;
   readonly model: string;
@@ -34,6 +34,7 @@ export class VehicleInfoDto {
   readonly status: EVehicleStatus;
   readonly categories: CategoryInfoDto[];
   readonly reviews: Omit<ReviewInfoDto, 'hiringId' | 'status'>[];
+  readonly averageRating?: number;
 }
 
 export class VehicleCreateDto {

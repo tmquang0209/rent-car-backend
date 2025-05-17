@@ -1,5 +1,5 @@
 import { BaseEntity } from '@common/database';
-import { RoleEntity } from '@entities';
+import { HiringEntity, RoleEntity } from '@entities';
 import * as bcrypt from 'bcryptjs';
 import {
   BeforeBulkCreate,
@@ -9,6 +9,7 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Table,
 } from 'sequelize-typescript';
 
@@ -53,6 +54,9 @@ export class UserEntity extends BaseEntity<UserEntity> {
 
   @BelongsTo(() => RoleEntity, 'roleId')
   declare role: RoleEntity;
+
+  @HasMany(() => HiringEntity, 'renterId')
+  declare hirings: HiringEntity[];
 
   @BeforeCreate
   static async hashPassword(user: UserEntity) {

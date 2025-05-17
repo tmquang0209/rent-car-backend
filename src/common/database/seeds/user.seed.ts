@@ -1,7 +1,17 @@
 import { RoleEntity, UserEntity } from '@entities';
 
 export class UserSeeder {
+  async truncate() {
+    await UserEntity.sequelize?.query('SET FOREIGN_KEY_CHECKS = 0;');
+    await UserEntity.destroy({
+      where: {},
+      truncate: true,
+    });
+    await UserEntity.sequelize?.query('SET FOREIGN_KEY_CHECKS = 1;');
+  }
+
   async run() {
+    await this.truncate();
     const roles = await RoleEntity.findAll();
     const adminUser = {
       fullName: 'Admin User',
@@ -39,5 +49,35 @@ export class UserSeeder {
       await UserEntity.create(userUser as UserEntity);
       console.log(`User with email ${userUser.email} created.`);
     }
+
+    // const roles = await RoleEntity.findOne({
+    //   where: {
+    //     code: 'renter',
+    //   },
+    // });
+    // const renterRole = roles?.id;
+    // // seed 1000 users
+    // const usersData: UserEntity[] = [];
+    // for (let i = 0; i < 1000; i++) {
+    //   const randomPhoneNumber = '039' + Math.floor(Math.random() * 10000000);
+
+    //   const user = {
+    //     fullName: customFaker.person.fullName(),
+    //     email: customFaker.internet.email(),
+    //     password: customFaker.internet.password(),
+    //     birthday: customFaker.date.past({
+    //       years: 22,
+    //     }),
+    //     address: customFaker.location.streetAddress(),
+    //     phoneNumber: randomPhoneNumber,
+    //     roleId: renterRole,
+    //   };
+
+    //   usersData.push(user as UserEntity);
+    // }
+    // await UserEntity.bulkCreate(usersData, {
+    //   ignoreDuplicates: true,
+    //   validate: true,
+    // });
   }
 }

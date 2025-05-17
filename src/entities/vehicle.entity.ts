@@ -2,6 +2,7 @@ import { BaseEntity } from '@common/database';
 import { EFuelType, ETransmission, EVehicleStatus } from '@common/enums';
 import {
   CategoryEntity,
+  HiringEntity,
   UserEntity,
   VehicleCategoryEntity,
   VehicleImageEntity,
@@ -149,11 +150,15 @@ export class VehicleEntity extends BaseEntity<VehicleEntity> {
   @HasMany(() => VehicleImageEntity)
   declare images: VehicleImageEntity[];
 
-  // many to many: CategoryEntity
-  @BelongsToMany(() => CategoryEntity, {
-    through: () => VehicleCategoryEntity,
-    foreignKey: 'vehicleId',
-    otherKey: 'categoryId',
-  })
+  @BelongsToMany(() => CategoryEntity, () => VehicleCategoryEntity)
   declare categories: CategoryEntity[];
+
+  @HasMany(() => HiringEntity, {
+    foreignKey: 'vehicleId',
+    sourceKey: 'id',
+  })
+  declare hirings: HiringEntity[];
+
+  // @BelongsToMany(() => ReviewEntity, () => HiringEntity)
+  // declare reviews: ReviewEntity[];
 }
