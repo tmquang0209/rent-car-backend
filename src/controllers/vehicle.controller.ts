@@ -13,6 +13,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { VehicleService } from '@services';
 
@@ -28,7 +29,7 @@ export class VehicleController {
 
   @AllowUnauthorized()
   @Get('list')
-  async getList(@Body() params: VehicleListRequestDto) {
+  async getList(@Query() params: VehicleListRequestDto) {
     return this.vehicleService.getAllVehicles(params);
   }
 

@@ -9,6 +9,7 @@ export class ReviewInfoDto {
   readonly rating: number;
   readonly comment: string;
   readonly status: EReviewStatus;
+  readonly createdAt: Date;
 }
 
 export class ReviewCreateDto {
@@ -38,6 +39,13 @@ export class ReviewApproveDto {
 export class ReviewDeleteDto {
   @IsUUID('4')
   readonly id: string;
+}
+
+export class ReviewInfo {
+  readonly id: string;
+  readonly fullName: string;
+  readonly rating: number;
+  readonly comment: string;
 }
 
 export class ReviewListRequestDto extends PaginationDto {

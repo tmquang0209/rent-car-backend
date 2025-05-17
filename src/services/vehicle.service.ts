@@ -7,6 +7,7 @@ import {
   VehicleUpdateDto,
 } from '@dto/vehicle.dto';
 import {
+  CategoryEntity,
   UserEntity,
   VehicleCategoryEntity,
   VehicleEntity,
@@ -103,74 +104,66 @@ export class VehicleService {
   async getAllVehicles(
     params: VehicleListRequestDto,
   ): Promise<VehicleListResponseDto> {
-    const { page, pageSize, categoryIds } = params;
+    const { page, pageSize } = params;
+    const categories = params.categories ?? [];
+
+    const includeOptions: any[] = [
+      {
+        model: UserEntity,
+        attributes: ['id', 'fullName', 'email', 'phoneNumber'],
+        as: 'owner',
+      },
+      {
+        model: VehicleImageEntity,
+        required: true,
+        attributes: ['id', 'imageUrl'],
+      },
+    ];
+
+    // If you want to filter by categories
+    if (categories.length > 0) {
+      includeOptions.push({
+        model: CategoryEntity,
+        through: { attributes: [] },
+        where: {
+          id: {
+            [Op.in]: categories,
+          },
+          name: {
+            [Op.any]: categories,
+          },
+        },
+        required: true,
+      });
+    } else {
+      includeOptions.push({
+        model: CategoryEntity,
+        through: { attributes: [] },
+        required: false,
+      });
+    }
 
     if (page === -1 || pageSize === -1) {
-      const includeOptions =
-        categoryIds && categoryIds.length > 0
-          ? [
-              {
-                model: VehicleCategoryEntity,
-                where: {
-                  categoryId: {
-                    [Op.in]: categoryIds,
-                  },
-                },
-              },
-              {
-                model: UserEntity,
-                attributes: ['id', 'fullName', 'email', 'phoneNumber'],
-              },
-              {
-                model: VehicleImageEntity,
-                required: true,
-              },
-            ]
-          : [
-              {
-                model: VehicleCategoryEntity,
-                required: true,
-              },
-              {
-                model: UserEntity,
-                attributes: ['id', 'fullName', 'email', 'phoneNumber'],
-              },
-              {
-                model: VehicleImageEntity,
-                required: true,
-              },
-            ];
-
       const vehicles = await this.vehicleModel.findAll({
         include: includeOptions,
+        attributes: {
+          exclude: ['createdAt', 'updatedAt', 'ownerId'],
+        },
       });
+
       return {
-        total: vehicles.length,
+        total: vehicles?.length,
         page: 1,
-        pageSize: vehicles.length,
-        data: (vehicles as unknown as VehicleInfoDto[]) || [],
+        pageSize: vehicles?.length,
+        data: vehicles as unknown as VehicleInfoDto[],
       };
     }
 
     const { rows, count } = await this.vehicleModel.findAndCountAll({
-      include: [
-        {
-          model: VehicleCategoryEntity,
-          where: {
-            categoryId: {
-              [Op.in]: categoryIds,
-            },
-          },
-        },
-        {
-          model: UserEntity,
-          attributes: ['id', 'fullName', 'email', 'phoneNumber'],
-        },
-        {
-          model: VehicleImageEntity,
-          required: true,
-        },
-      ],
+      include: includeOptions,
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'ownerId'],
+      },
       limit: pageSize,
       offset: (page - 1) * pageSize,
     });

@@ -1,6 +1,12 @@
 import { BaseEntity } from '@common/database';
-import { VehicleCategoryEntity } from '@entities';
-import { Column, DataType, HasMany, Table } from 'sequelize-typescript';
+import { VehicleCategoryEntity, VehicleEntity } from '@entities';
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  HasMany,
+  Table,
+} from 'sequelize-typescript';
 
 @Table({
   tableName: 'categories',
@@ -31,4 +37,11 @@ export class CategoryEntity extends BaseEntity<CategoryEntity> {
 
   @HasMany(() => VehicleCategoryEntity, 'categoryId')
   vehicleCategories: VehicleCategoryEntity[];
+
+  @BelongsToMany(() => VehicleEntity, {
+    through: () => VehicleCategoryEntity,
+    foreignKey: 'categoryId',
+    otherKey: 'vehicleId',
+  })
+  vehicles: VehicleEntity[];
 }

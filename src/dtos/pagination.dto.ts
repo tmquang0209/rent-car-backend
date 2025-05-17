@@ -5,12 +5,12 @@ export class PaginationDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  readonly page: number;
+  readonly page: number = -1;
 
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  readonly pageSize: number;
+  readonly pageSize: number = -1;
 }
 
 export class PaginationResponseDto<T> {

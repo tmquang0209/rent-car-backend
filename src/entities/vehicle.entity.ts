@@ -1,7 +1,19 @@
 import { BaseEntity } from '@common/database';
 import { EFuelType, ETransmission, EVehicleStatus } from '@common/enums';
-import { UserEntity } from '@entities';
-import { BelongsTo, Column, DataType, Table } from 'sequelize-typescript';
+import {
+  CategoryEntity,
+  UserEntity,
+  VehicleCategoryEntity,
+  VehicleImageEntity,
+} from '@entities';
+import {
+  BelongsTo,
+  BelongsToMany,
+  Column,
+  DataType,
+  HasMany,
+  Table,
+} from 'sequelize-typescript';
 
 @Table({ tableName: 'vehicles', timestamps: true })
 export class VehicleEntity extends BaseEntity<VehicleEntity> {
@@ -131,10 +143,17 @@ export class VehicleEntity extends BaseEntity<VehicleEntity> {
   })
   declare owner: UserEntity;
 
-  // @BelongsTo(() => VehicleCategoryEntity, {
-  //   foreignKey: 'vehicleId',
-  //   targetKey: 'vehicleId',
-  //   as: 'vehicleCategory',
-  // })
-  // declare vehicleCategory: VehicleCategoryEntity[];
+  @HasMany(() => VehicleCategoryEntity)
+  declare vehicleCategory: VehicleCategoryEntity[];
+
+  @HasMany(() => VehicleImageEntity)
+  declare images: VehicleImageEntity[];
+
+  // many to many: CategoryEntity
+  @BelongsToMany(() => CategoryEntity, {
+    through: () => VehicleCategoryEntity,
+    foreignKey: 'vehicleId',
+    otherKey: 'categoryId',
+  })
+  declare categories: CategoryEntity[];
 }

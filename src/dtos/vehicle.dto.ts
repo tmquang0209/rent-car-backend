@@ -4,6 +4,7 @@ import {
   OwnerInfoDto,
   PaginationDto,
   PaginationResponseDto,
+  ReviewInfoDto,
 } from '@dto';
 import {
   IsIn,
@@ -32,6 +33,7 @@ export class VehicleInfoDto {
   readonly isActive: boolean;
   readonly status: EVehicleStatus;
   readonly categories: CategoryInfoDto[];
+  readonly reviews: Omit<ReviewInfoDto, 'hiringId' | 'status'>[];
 }
 
 export class VehicleCreateDto {
@@ -104,39 +106,39 @@ export class VehicleDeleteDto {
 export class VehicleListRequestDto extends PaginationDto {
   @IsOptional()
   @IsString()
-  readonly categoryIds: string[];
+  readonly categories?: string[];
 
   @IsOptional()
   @IsString()
-  readonly name: string;
+  readonly name?: string;
 
   @IsOptional()
   @IsString()
-  readonly brand: string;
+  readonly brand?: string;
 
   @IsOptional()
   @IsString()
-  readonly model: string;
+  readonly model?: string;
 
   @IsOptional()
   @IsString()
-  readonly licensePlate: string;
+  readonly licensePlate?: string;
 
   @IsOptional()
   @IsString()
-  readonly location: string;
+  readonly location?: string;
 
   @IsOptional()
   @IsIn([...Object.values(ETransmission)])
-  readonly transmission: ETransmission;
+  readonly transmission?: ETransmission;
 
   @IsOptional()
   @IsIn([...Object.values(EFuelType)])
-  readonly fuelType: EFuelType;
+  readonly fuelType?: EFuelType;
 
   @IsOptional()
   @IsIn([...Object.values(EVehicleStatus)])
-  readonly status: EVehicleStatus;
+  readonly status?: EVehicleStatus;
 }
 
 export class VehicleListResponseDto extends PaginationResponseDto<VehicleInfoDto> {}

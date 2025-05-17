@@ -22,14 +22,6 @@ export class ReviewEntity extends BaseEntity<ReviewEntity> {
   })
   declare hiringId: string;
 
-  @ForeignKey(() => UserEntity)
-  @Column({
-    field: 'reviewer_id',
-    type: DataType.UUID,
-    allowNull: false,
-  })
-  declare reviewerId: string;
-
   @Column({
     field: 'rating',
     type: DataType.SMALLINT,
