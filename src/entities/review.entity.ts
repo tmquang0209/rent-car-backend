@@ -22,6 +22,17 @@ export class ReviewEntity extends BaseEntity<ReviewEntity> {
   })
   declare hiringId: string;
 
+  @BelongsTo(() => HiringEntity, 'hiringId')
+  hiring: HiringEntity;
+
+  @ForeignKey(() => UserEntity)
+  @Column({
+    field: 'reviewer_id',
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  declare reviewerId: string;
+
   @Column({
     field: 'rating',
     type: DataType.SMALLINT,
@@ -43,9 +54,6 @@ export class ReviewEntity extends BaseEntity<ReviewEntity> {
     defaultValue: EReviewStatus.PENDING,
   })
   declare status: EReviewStatus;
-
-  @BelongsTo(() => HiringEntity, 'hiringId')
-  hiring: HiringEntity;
 
   @BelongsTo(() => UserEntity, 'reviewerId')
   reviewer: UserEntity;

@@ -3,6 +3,7 @@ import { JwtStrategy } from '@common/guards';
 import {
   AuthController,
   CategoryController,
+  ReviewController,
   UploadController,
   UserController,
   VehicleController,
@@ -31,6 +32,7 @@ import {
   CategoryService,
   MailService,
   MinioService,
+  ReviewService,
   RoleService,
   UserService,
   VehicleService,
@@ -97,6 +99,7 @@ import { RoleController } from './controllers/role.controller';
     RoleController,
     CategoryController,
     VehicleController,
+    ReviewController,
   ], // need to add controllers here
   providers: [
     AuthService,
@@ -107,6 +110,7 @@ import { RoleController } from './controllers/role.controller';
     JwtStrategy,
     CategoryService,
     VehicleService,
+    ReviewService,
   ], // need to add providers here
 })
 export class AppModule {}

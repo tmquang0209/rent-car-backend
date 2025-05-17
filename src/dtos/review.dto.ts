@@ -1,6 +1,18 @@
 import { EReviewStatus } from '@common/enums';
-import { HiringInfoDto, PaginationDto, ReviewerInfoDto } from '@dto';
-import { IsNumber, IsString, IsUUID, Max, Min } from 'class-validator';
+import {
+  HiringInfoDto,
+  PaginationDto,
+  PaginationResponseDto,
+  ReviewerInfoDto,
+} from '@dto';
+import {
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class ReviewInfoDto {
   readonly id: string;
@@ -49,12 +61,20 @@ export class ReviewInfo {
 }
 
 export class ReviewListRequestDto extends PaginationDto {
+  @IsOptional()
   @IsUUID('4')
-  readonly hiringId: HiringInfoDto;
+  readonly hiringId?: HiringInfoDto;
 
   @IsUUID('4')
-  readonly reviewer: ReviewerInfoDto;
+  readonly vehicleId?: string;
 
+  @IsOptional()
+  @IsUUID('4')
+  readonly reviewer?: ReviewerInfoDto;
+
+  @IsOptional()
   @IsString()
-  readonly status: EReviewStatus;
+  readonly status?: EReviewStatus;
 }
+
+export class ReviewListResponseDto extends PaginationResponseDto<ReviewInfoDto> {}
