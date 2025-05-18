@@ -106,7 +106,7 @@ export class VehicleDeleteDto {
 
 export class VehicleListRequestDto extends PaginationDto {
   @IsOptional()
-  @IsString()
+  @IsString({ each: true })
   readonly categories?: string[];
 
   @IsOptional()

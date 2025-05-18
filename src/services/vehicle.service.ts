@@ -87,11 +87,11 @@ export class VehicleService {
           model: CategoryEntity,
           attributes: ['id', 'name'],
           through: { attributes: [] },
-          required: true,
+          required: false,
         },
         {
           model: VehicleImageEntity,
-          required: true,
+          required: false,
           attributes: ['id', 'imageUrl'],
         },
         {
@@ -102,6 +102,7 @@ export class VehicleService {
         {
           model: HiringEntity,
           as: 'hirings',
+          required: false,
           attributes: [],
           include: [
             {
@@ -135,64 +136,36 @@ export class VehicleService {
     }
 
     return vehicle as unknown as HiringInfoDto;
-    // return {
-    //   id: vehicle.id,
-    //   owner: {
-    //     id: vehicle.owner.id,
-    //     fullName: vehicle.owner.fullName,
-    //     email: vehicle.owner.email,
-    //     phoneNumber: vehicle.owner.phoneNumber,
-    //   },
-    //   name: vehicle.name,
-    //   brand: vehicle.brand,
-    //   model: vehicle.model,
-    //   year: vehicle.year,
-    //   licensePlate: vehicle.licensePlate,
-    //   location: vehicle.location,
-    //   seats: vehicle.seats,
-    //   transmission: vehicle.transmission,
-    //   fuelType: vehicle.fuelType,
-    //   pricePerDay: vehicle.pricePerDay,
-    //   title: vehicle.title,
-    //   description: vehicle.description,
-    //   status: vehicle.status,
-    //   averageRating: vehicle.get('averageRating'),
-    //   categories: vehicle.categories.map((category) => ({
-    //     id: category.id,
-    //     name: category.name,
-    //   })),
-    //   images: vehicle.images.map((image) => ({
-    //     id: image.id,
-    //     imageUrl: image.imageUrl,
-    //   })),
-    //   reviews: vehicle.hirings.flatMap((hiring) => hiring.review),
-    // } as unknown as VehicleInfoDto;
   }
 
   async getAllVehicles(
     params: VehicleListRequestDto,
   ): Promise<VehicleListResponseDto> {
     const { page, pageSize, categories = [] } = params;
+    console.log('🚀 ~ VehicleService ~ categories:', categories);
 
     const includeOptions: any[] = [
       {
         model: UserEntity,
         attributes: ['id', 'fullName', 'email', 'phoneNumber'],
         as: 'owner',
+        required: false,
       },
       {
         model: VehicleImageEntity,
-        required: true,
+        required: false,
         attributes: ['id', 'imageUrl'],
       },
       {
         model: HiringEntity,
         as: 'hirings',
+        required: false,
         attributes: [],
         include: [
           {
             model: ReviewEntity,
             attributes: [],
+            required: false,
           },
         ],
       },
@@ -201,6 +174,7 @@ export class VehicleService {
     if (categories.length > 0) {
       includeOptions.push({
         model: CategoryEntity,
+        as: 'categories',
         through: { attributes: [] },
         where: {
           [Op.or]: [
@@ -218,24 +192,25 @@ export class VehicleService {
       });
     }
 
-    const findOptions: any = {
-      include: includeOptions,
-      attributes: {
-        exclude: ['createdAt', 'updatedAt', 'ownerId'],
-        include: [
-          [
-            Sequelize.literal(`(
+    const findOptions: import('sequelize').FindAndCountOptions<VehicleEntity> =
+      {
+        include: includeOptions,
+        attributes: {
+          exclude: ['createdAt', 'updatedAt', 'ownerId'],
+          include: [
+            [
+              Sequelize.literal(`(
               SELECT COALESCE(AVG(reviews.rating), 0)
               FROM hirings AS h
               LEFT JOIN reviews ON h.id = reviews.hiring_id
               WHERE h.vehicle_id = VehicleEntity.id
             )`),
-            'averageRating',
+              'averageRating',
+            ],
           ],
-        ],
-      },
-      group: ['VehicleEntity.id'],
-    };
+        },
+        group: ['VehicleEntity.id'],
+      };
 
     if (page !== -1 && pageSize !== -1) {
       findOptions.limit = pageSize;
@@ -250,6 +225,7 @@ export class VehicleService {
       };
     } else {
       const vehicles = await this.vehicleModel.findAll(findOptions);
+      console.log('🚀 ~ VehicleService ~ vehicles:', vehicles.length);
       return {
         total: vehicles.length,
         page: 1,
