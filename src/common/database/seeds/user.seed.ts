@@ -58,12 +58,30 @@ export class UserSeeder {
     const renterRole = roles.find((role) => role.code === 'renter')?.id;
     // seed 1000 users
     const usersData: UserEntity[] = [];
+    const usedPhoneNumbers = new Set<string>();
     for (let i = 0; i < 1000; i++) {
-      const randomPhoneNumber = '039' + Math.floor(Math.random() * 10000000);
+      let randomPhoneNumber: string;
+      do {
+        randomPhoneNumber =
+          '039' + Math.floor(1000000 + Math.random() * 9000000).toString();
+      } while (usedPhoneNumbers.has(randomPhoneNumber));
+      usedPhoneNumbers.add(randomPhoneNumber);
+
+      const fullName = customFaker.person.fullName();
+      const email = customFaker.internet.email({
+        firstName: fullName.split(' ')[0],
+        lastName: fullName.split(' ')[1],
+        allowSpecialCharacters: true,
+        provider: 'gmail.com',
+      });
+
+      // add timestamp to email
+      const timestamp = Date.now();
+      const emailWithTimestamp = `${email.split('@')[0]}_${timestamp}@${email.split('@')[1]}`;
 
       const user = {
         fullName: customFaker.person.fullName(),
-        email: customFaker.internet.email(),
+        email: emailWithTimestamp,
         password: '12345678',
         birthday: customFaker.date.past({
           years: 22,
