@@ -11,7 +11,6 @@ export class ReviewController {
   @AllowUnauthorized()
   @ResponseMessage('Lấy danh sách đánh giá thành công')
   async getList(@Query() params: ReviewListRequestDto) {
-    console.log('🚀 ~ ReviewController ~ getList ~ params:', params);
     return this.reviewService.getReviewsByVehicle(params);
   }
 }

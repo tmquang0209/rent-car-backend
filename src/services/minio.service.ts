@@ -5,8 +5,8 @@ import * as path from 'path';
 
 @Injectable()
 export class MinioService implements OnModuleInit {
-  private minioClient: Minio.Client;
-  private minioConfig = {
+  private readonly minioClient: Minio.Client;
+  private readonly minioConfig = {
     endPoint: process.env.MINIO_ENDPOINT,
     port: Number(process.env.MINIO_PORT),
     useSSL: process.env.MINIO_USE_SSL === 'true',
@@ -26,6 +26,10 @@ export class MinioService implements OnModuleInit {
   }
 
   async onModuleInit() {
+    if (process.env.MINIO_ENABLE !== 'true') {
+      console.log('MinIO is disabled');
+      return;
+    }
     const exists = await this.minioClient.bucketExists(
       this.minioConfig.bucketName,
     );
@@ -39,6 +43,11 @@ export class MinioService implements OnModuleInit {
 
   async uploadFile(file: Express.Multer.File, folder: string) {
     try {
+      if (process.env.MINIO_ENABLE !== 'true') {
+        console.log('MinIO is disabled');
+        throw new BadRequestException('MinIO is disabled');
+      }
+
       const filePath = path.join(__dirname, '../../tmp', file.filename);
 
       // Read the file content into a buffer
@@ -66,6 +75,10 @@ export class MinioService implements OnModuleInit {
     filename: string,
     expirySeconds = 3600,
   ): Promise<string> {
+    if (process.env.MINIO_ENABLE !== 'true') {
+      console.log('MinIO is disabled');
+      throw new BadRequestException('MinIO is disabled');
+    }
     return this.minioClient.presignedPutObject(
       this.minioConfig.bucketName,
       filename,
@@ -77,6 +90,10 @@ export class MinioService implements OnModuleInit {
     filename: string,
     expirySeconds = 3600,
   ): Promise<string> {
+    if (process.env.MINIO_ENABLE !== 'true') {
+      console.log('MinIO is disabled');
+      throw new BadRequestException('MinIO is disabled');
+    }
     return this.minioClient.presignedGetObject(
       this.minioConfig.bucketName,
       filename,
@@ -85,6 +102,10 @@ export class MinioService implements OnModuleInit {
   }
 
   async deleteObject(filename: string): Promise<void> {
+    if (process.env.MINIO_ENABLE !== 'true') {
+      console.log('MinIO is disabled');
+      throw new BadRequestException('MinIO is disabled');
+    }
     await this.minioClient.removeObject(this.minioConfig.bucketName, filename);
   }
 }

@@ -22,6 +22,7 @@ declare namespace NodeJS {
     JWT_EXPIRES_IN: string;
     JWT_REFRESH_SECRET: string;
     JWT_REFRESH_EXPIRES_IN: string;
+    MINIO_ENABLE: 'true' | 'false';
     MINIO_ENDPOINT: string;
     MINIO_PORT: string;
     MINIO_ACCESS_KEY: string;
