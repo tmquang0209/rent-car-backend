@@ -60,6 +60,7 @@ export class UserSeeder {
     const usersData: UserEntity[] = [];
     const usedPhoneNumbers = new Set<string>();
     for (let i = 0; i < 1000; i++) {
+      console.log(`Seeding user ${i + 1}...`);
       let randomPhoneNumber: string;
       do {
         randomPhoneNumber =

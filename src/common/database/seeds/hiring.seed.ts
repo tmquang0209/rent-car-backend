@@ -13,7 +13,7 @@ export class HiringSeeder {
   }
 
   async run() {
-    // await this.truncate();
+    await this.truncate();
 
     const renters = await UserEntity.findAll({
       include: [
@@ -34,6 +34,11 @@ export class HiringSeeder {
       for (let j = 0; j < 10; j++) {
         const randomRenter =
           renters[Math.floor(Math.random() * renters.length)];
+
+        if (!randomRenter) {
+          continue;
+        }
+
         const randomVehicle =
           vehicles[Math.floor(Math.random() * vehicles.length)];
 

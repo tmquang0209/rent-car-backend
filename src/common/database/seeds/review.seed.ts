@@ -43,7 +43,7 @@ export class ReviewSeeder {
       const review = {
         hiringId: hiring.id,
         reviewerId: hiring.renterId,
-        rating: Math.floor(Math.random() * 5) + 1,
+        rating: Math.floor(Math.random() * 3) + 3, // random 3-5 star
         comment: generateVietnameseCarRentalReview(),
         status: EReviewStatus.APPROVED,
       };

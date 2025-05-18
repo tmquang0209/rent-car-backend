@@ -13,7 +13,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'user', timestamps: true })
+@Table({ tableName: 'users', timestamps: true })
 export class UserEntity extends BaseEntity<UserEntity> {
   @Column({ field: 'full_name', type: DataType.STRING(255), allowNull: false })
   declare fullName: string;
