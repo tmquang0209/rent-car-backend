@@ -1,5 +1,12 @@
 import { EHiringStatus } from '@common/enums';
-import { IsDate, IsNumber, IsString, IsUUID } from 'class-validator';
+import {
+  IsArray,
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { PaginationDto } from './pagination.dto';
 import { VehicleInfoDto } from './vehicle.dto';
 
@@ -36,6 +43,10 @@ export class HiringCreateDto {
 
   @IsNumber()
   readonly totalPrice: number;
+
+  @IsOptional()
+  @IsArray()
+  readonly extraInfo: Record<string, string | number | boolean>;
 }
 
 export class HiringUpdateDto extends HiringCreateDto {

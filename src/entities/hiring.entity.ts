@@ -76,6 +76,13 @@ export class HiringEntity extends BaseEntity<HiringEntity> {
   })
   declare status: EHiringStatus;
 
+  @Column({
+    field: 'extra_info',
+    type: DataType.JSONB,
+    allowNull: true,
+  })
+  declare extraInfo: string;
+
   @BelongsTo(() => UserEntity, 'renterId')
   renter: UserEntity;
 
