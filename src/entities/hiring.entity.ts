@@ -5,9 +5,11 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   HasOne,
   Table,
 } from 'sequelize-typescript';
+import { PaymentEntity } from './payment.entity';
 import { ReviewEntity } from './review.entity';
 import { UserEntity } from './user.entity';
 import { VehicleEntity } from './vehicle.entity';
@@ -78,7 +80,7 @@ export class HiringEntity extends BaseEntity<HiringEntity> {
 
   @Column({
     field: 'extra_info',
-    type: DataType.JSONB,
+    type: DataType.JSON,
     allowNull: true,
   })
   declare extraInfo: string;
@@ -94,4 +96,7 @@ export class HiringEntity extends BaseEntity<HiringEntity> {
 
   @HasOne(() => ReviewEntity, 'hiringId')
   review: ReviewEntity;
+
+  @HasMany(() => PaymentEntity)
+  payments: PaymentEntity[];
 }
