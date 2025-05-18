@@ -4,7 +4,6 @@ import {
   UserEntity,
   VehicleCategoryEntity,
   VehicleEntity,
-  VehicleImageEntity,
 } from '@entities';
 
 const images = [
@@ -162,22 +161,5 @@ export class VehicleSeeder {
         validate: true,
       },
     );
-
-    // Assign random images to each vehicle (up to 5 images)
-    const vehicleImages = data.flatMap((vehicle) => {
-      const count = randomInt(1, 5);
-      const selectedImages = images
-        .toSorted(() => 0.5 - Math.random())
-        .slice(0, count);
-      return selectedImages.map((image) => ({
-        vehicleId: vehicle.id,
-        imageUrl: image,
-      }));
-    });
-
-    await VehicleImageEntity.bulkCreate(vehicleImages as VehicleImageEntity[], {
-      ignoreDuplicates: true,
-      validate: true,
-    });
   }
 }
