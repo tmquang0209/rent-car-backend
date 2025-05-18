@@ -1,6 +1,7 @@
 export * from './category.entity';
 export * from './hiring.entity';
 export * from './notification.entity';
+export * from './payment.entity';
 export * from './permission.entity';
 export * from './review.entity';
 export * from './role-permissions.entity';

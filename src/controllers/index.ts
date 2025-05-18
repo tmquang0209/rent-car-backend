@@ -1,5 +1,7 @@
 export * from './auth.controller';
 export * from './category.controller';
+export * from './hiring.controller';
+export * from './payment.controller';
 export * from './review.controller';
 export * from './role.controller';
 export * from './upload.controller';

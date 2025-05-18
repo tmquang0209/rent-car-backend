@@ -1,4 +1,5 @@
 export * from './hiring.enum';
+export * from './payment.enum';
 export * from './permissions.enum';
 export * from './review.enum';
 export * from './vehicle.enum';
