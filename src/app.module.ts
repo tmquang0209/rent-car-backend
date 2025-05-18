@@ -1,8 +1,10 @@
 import { databaseConfig } from '@common/database';
-import { JwtStrategy } from '@common/guards';
+import { JwtStrategy, RefreshTokenStrategy } from '@common/guards';
 import {
   AuthController,
   CategoryController,
+  HiringController,
+  PaymentController,
   ReviewController,
   UploadController,
   UserController,
@@ -12,6 +14,7 @@ import {
   CategoryEntity,
   HiringEntity,
   NotificationEntity,
+  PaymentEntity,
   PermissionEntity,
   ReviewEntity,
   RoleEntity,
@@ -30,8 +33,10 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import {
   AuthService,
   CategoryService,
+  HiringService,
   MailService,
   MinioService,
+  PaymentService,
   ReviewService,
   RoleService,
   UserService,
@@ -66,6 +71,7 @@ import { RoleController } from './controllers/role.controller';
       ReviewEntity,
       NotificationEntity,
       VehicleImageEntity,
+      PaymentEntity,
     ]),
     SequelizeModule.forRootAsync({
       useFactory: databaseConfig,
@@ -100,6 +106,8 @@ import { RoleController } from './controllers/role.controller';
     CategoryController,
     VehicleController,
     ReviewController,
+    HiringController,
+    PaymentController,
   ], // need to add controllers here
   providers: [
     AuthService,
@@ -111,6 +119,9 @@ import { RoleController } from './controllers/role.controller';
     CategoryService,
     VehicleService,
     ReviewService,
+    HiringService,
+    PaymentService,
+    RefreshTokenStrategy,
   ], // need to add providers here
 })
 export class AppModule {}
