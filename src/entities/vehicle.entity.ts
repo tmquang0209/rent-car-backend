@@ -12,12 +12,14 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  ForeignKey,
   HasMany,
   Table,
 } from 'sequelize-typescript';
 
 @Table({ tableName: 'vehicles', timestamps: true })
 export class VehicleEntity extends BaseEntity<VehicleEntity> {
+  @ForeignKey(() => UserEntity)
   @Column({
     field: 'owner_id',
     type: DataType.UUID,

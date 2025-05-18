@@ -98,6 +98,7 @@ export class VehicleService {
           model: UserEntity,
           attributes: ['id', 'fullName', 'email', 'phoneNumber'],
           as: 'owner',
+          required: true,
         },
         {
           model: HiringEntity,
@@ -149,7 +150,7 @@ export class VehicleService {
         model: UserEntity,
         attributes: ['id', 'fullName', 'email', 'phoneNumber'],
         as: 'owner',
-        required: false,
+        required: true,
       },
       {
         model: VehicleImageEntity,

@@ -7,6 +7,7 @@ import { RoleSeeder } from './role.seed';
 import { UserSeeder } from './user.seed';
 import { VehicleSeeder } from './vehicle.seed';
 import { ReviewSeeder } from './review.seed';
+import { VehicleImageSeeder } from './vehicle-image.seed';
 
 export class Seeder {
   async run() {
@@ -18,6 +19,7 @@ export class Seeder {
     const vehicleSeeder = new VehicleSeeder();
     const hiringSeeder = new HiringSeeder();
     const reviewSeeder = new ReviewSeeder();
+    const vehicleImageSeeder = new VehicleImageSeeder();
 
     Logger.log('Seeding database...');
     await permissionSeeder.run();
@@ -28,6 +30,7 @@ export class Seeder {
     await vehicleSeeder.run();
     await hiringSeeder.run();
     await reviewSeeder.run();
+    await vehicleImageSeeder.run();
 
     Logger.log('Database seeded successfully.');
   }
