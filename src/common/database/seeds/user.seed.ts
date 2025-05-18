@@ -64,7 +64,7 @@ export class UserSeeder {
       const user = {
         fullName: customFaker.person.fullName(),
         email: customFaker.internet.email(),
-        password: customFaker.internet.password(),
+        password: '12345678',
         birthday: customFaker.date.past({
           years: 22,
         }),
