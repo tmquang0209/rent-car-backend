@@ -18,6 +18,13 @@ export class OwnerInfoDto {
   readonly phoneNumber: string;
 }
 
+export class RenterInfoDto {
+  readonly id: string;
+  readonly fullName: string;
+  readonly email: string;
+  readonly phoneNumber: string;
+}
+
 export class ReviewerInfoDto {
   readonly id: string;
   readonly fullName: string;

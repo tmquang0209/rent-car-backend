@@ -1,4 +1,6 @@
 import { EHiringStatus } from '@common/enums';
+import { RenterInfoDto, VehicleInfoDto } from '@dto';
+import { PaginationDto, PaginationResponseDto } from '@dto/pagination.dto';
 import {
   IsArray,
   IsDate,
@@ -7,19 +9,30 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { PaginationDto } from './pagination.dto';
-import { VehicleInfoDto } from './vehicle.dto';
 
 export class HiringInfoDto {
   readonly id: string;
-  readonly vehicle: VehicleInfoDto;
-  readonly userId: string;
+  readonly vehicle: Omit<
+    VehicleInfoDto,
+    | 'owner'
+    | 'reviews'
+    | 'categories'
+    | 'status'
+    | 'isActive'
+    | 'averageRating'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'title'
+    | 'description'
+  >;
+  readonly renter: RenterInfoDto;
   readonly startDate: Date;
   readonly endDate: Date;
   readonly pickupLocation: string;
   readonly dropoffLocation: string;
   readonly totalPrice: number;
   readonly status: EHiringStatus;
+  readonly extraInfo: Record<string, string | number | boolean>;
 }
 
 export class HiringCreateDto {
@@ -60,15 +73,21 @@ export class HiringDeleteDto {
 }
 
 export class HiringListRequestDto extends PaginationDto {
+  @IsOptional()
   @IsUUID('4')
   readonly vehicleId: string;
 
+  @IsOptional()
   @IsUUID('4')
   readonly renterId: string;
 
+  @IsOptional()
   @IsString()
   readonly pickupLocation: string;
 
+  @IsOptional()
   @IsString()
   readonly dropoffLocation: string;
 }
+
+export class HiringListResponseDto extends PaginationResponseDto<HiringInfoDto> {}

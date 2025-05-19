@@ -143,7 +143,6 @@ export class VehicleService {
     params: VehicleListRequestDto,
   ): Promise<VehicleListResponseDto> {
     const { page, pageSize, categories = [] } = params;
-    console.log('🚀 ~ VehicleService ~ categories:', categories);
 
     const includeOptions: any[] = [
       {
@@ -226,7 +225,6 @@ export class VehicleService {
       };
     } else {
       const vehicles = await this.vehicleModel.findAll(findOptions);
-      console.log('🚀 ~ VehicleService ~ vehicles:', vehicles.length);
       return {
         total: vehicles.length,
         page: 1,
