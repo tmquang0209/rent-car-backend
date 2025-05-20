@@ -9,6 +9,7 @@ import {
 import { CategoryEntity } from '@entities';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class CategoryService {
@@ -44,7 +45,9 @@ export class CategoryService {
     if ((page === -1 && pageSize === -1) || !page || !pageSize) {
       console.log('run this');
 
-      const categories = await this.categoryModel.findAll();
+      const categories = await this.categoryModel.findAll({
+        order: [['createdAt', 'DESC']],
+      });
       return {
         total: categories.length,
         page: 1,
@@ -70,7 +73,12 @@ export class CategoryService {
     const category = await this.getCategoryById({ id: params.id });
 
     const existingCategory = await this.categoryModel.findOne({
-      where: { name: params.name, id: { $ne: params.id } },
+      where: {
+        name: params.name,
+        id: {
+          [Op.ne]: params.id,
+        },
+      },
     });
 
     if (existingCategory && existingCategory.id !== params.id)
