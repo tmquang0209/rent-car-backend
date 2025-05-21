@@ -5,6 +5,7 @@ import {
   ChangePasswordDto,
   CreateUserDto,
   UpdateUserDto,
+  UserListDto,
 } from '@dto';
 import { Body, Controller, Get, Param, Post, Put, Req } from '@nestjs/common';
 import { UserService } from '@services';
@@ -27,11 +28,11 @@ export class UserController {
     return this.userService.createUser(params);
   }
 
-  @Post('get-list')
+  @Post('list')
   @ResponseMessage('Lấy danh sách người dùng thành công!')
   @Permissions(PermissionKeys.USER_READ)
-  getListUsers() {
-    return this.userService.getListUsers();
+  getListUsers(@Body() data: UserListDto) {
+    return this.userService.getListUsers(data);
   }
 
   @Put('update')

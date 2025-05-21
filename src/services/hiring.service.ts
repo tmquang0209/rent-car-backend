@@ -3,6 +3,7 @@ import {
   HiringInfoDto,
   HiringListRequestDto,
   HiringListResponseDto,
+  HiringUpdateDto,
 } from '@dto';
 import {
   HiringEntity,
@@ -24,11 +25,29 @@ export class HiringService {
     return this.hiringModel.create(hiring as unknown as HiringEntity);
   }
 
+  async findHiringById(id: string): Promise<HiringInfoDto> {
+    const hiring = await this.hiringModel.findOne({
+      where: { id },
+      include: [
+        {
+          model: UserEntity,
+          required: false,
+          attributes: ['id', 'fullName', 'email', 'phoneNumber'],
+        },
+        {
+          model: VehicleEntity,
+          required: false,
+          attributes: ['id', 'name', 'brand', 'model'],
+        },
+      ],
+    });
+    return hiring as unknown as HiringInfoDto;
+  }
+
   async getAllHirings(
     params: HiringListRequestDto,
   ): Promise<HiringListResponseDto> {
     const { page, pageSize } = params;
-    console.log('🚀 ~ HiringService ~ params:', params);
 
     if (page === -1 && pageSize === -1) {
       const allHirings = await this.hiringModel.findAll({
@@ -66,9 +85,6 @@ export class HiringService {
         attributes: {
           exclude: ['createdAt', 'renterId', 'vehicleId'],
         },
-        where: {
-          renterId: params.renterId,
-        },
       });
       return {
         page: 1,
@@ -76,6 +92,11 @@ export class HiringService {
         total: allHirings.length,
         data: allHirings as unknown as HiringInfoDto[],
       };
+    }
+
+    const where = {};
+    if (params.renterId) {
+      where['renterId'] = params.renterId;
     }
 
     const { count, rows } = await this.hiringModel.findAndCountAll({
@@ -111,9 +132,7 @@ export class HiringService {
       attributes: {
         exclude: ['createdAt', 'renterId', 'vehicleId'],
       },
-      where: {
-        renterId: params.renterId,
-      },
+      where,
       limit: pageSize,
       offset: (page - 1) * pageSize,
     });
@@ -124,5 +143,14 @@ export class HiringService {
       total: count,
       data: rows as unknown as HiringInfoDto[],
     };
+  }
+
+  async updateHiring(params: HiringUpdateDto): Promise<HiringInfoDto> {
+    const { id, ...rest } = params;
+    await this.hiringModel.update(rest as unknown as HiringEntity, {
+      where: { id },
+      returning: true,
+    });
+    return this.findHiringById(id);
   }
 }

@@ -142,6 +142,7 @@ export class VehicleService {
   async getAllVehicles(
     params: VehicleListRequestDto,
   ): Promise<VehicleListResponseDto> {
+    console.log('🚀 ~ VehicleService ~ params:', params);
     const { page, pageSize, categories = [] } = params;
 
     const includeOptions: any[] = [

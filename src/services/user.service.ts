@@ -3,6 +3,7 @@ import {
   ChangePasswordDto,
   CreateUserDto,
   UpdateUserDto,
+  UserListDto,
 } from '@dto';
 import {
   PermissionEntity,
@@ -19,6 +20,7 @@ import {
 import { InjectModel } from '@nestjs/sequelize';
 import { RoleService } from '@services';
 import * as bcrypt from 'bcryptjs';
+import { Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
@@ -116,18 +118,52 @@ export class UserService {
     };
   }
 
-  async getListUsers() {
-    // return await this.userRepo.findAll({
-    //   attributes: ['id', 'fullName', 'email'],
-    //   where: { status: UserStatus.ACTIVE },
-    //   include: [
-    //     {
-    //       model: RoleEntity,
-    //       required: true,
-    //       attributes: ['id', 'roleName'],
-    //     },
-    //   ],
-    // });
+  async getListUsers(params: UserListDto) {
+    const roleWhere = params.role
+      ? {
+          [Op.or]: [
+            {
+              code: {
+                [Op.like]: `%${params.role}%`,
+              },
+            },
+            {
+              name: {
+                [Op.like]: `%${params.role}%`,
+              },
+            },
+          ],
+        }
+      : {};
+    const { page, pageSize } = params;
+
+    if (page === -1 && pageSize === -1) {
+      return await this.userRepo.findAll({
+        attributes: ['id', 'fullName', 'email', 'phoneNumber'],
+        include: [
+          {
+            model: RoleEntity,
+            required: true,
+            attributes: ['id', 'name'],
+            where: roleWhere,
+          },
+        ],
+      });
+    }
+
+    return await this.userRepo.findAll({
+      attributes: ['id', 'fullName', 'email', 'phoneNumber'],
+      include: [
+        {
+          model: RoleEntity,
+          required: true,
+          attributes: ['id', 'name'],
+          where: roleWhere,
+        },
+      ],
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    });
   }
 
   async getUserById(

@@ -1,7 +1,6 @@
 import { PaginationDto } from '@dto';
 import { Transform, TransformFnParams } from 'class-transformer';
 import {
-  IsBoolean,
   IsDate,
   IsNotEmpty,
   IsOptional,
@@ -111,18 +110,31 @@ export class ChangePasswordDto {
 export class UserListDto extends PaginationDto {
   @IsOptional()
   @IsString()
-  readonly keywords: string;
+  readonly id?: string;
 
   @IsOptional()
-  @IsBoolean()
-  readonly status: boolean;
+  @IsString()
+  readonly fullName: string;
 
   @IsOptional()
-  @IsBoolean()
-  readonly checkInStatus: boolean;
+  @IsString()
+  readonly email: string;
 
   @IsOptional()
-  readonly projectIds: string[];
+  @IsString()
+  readonly phoneNumber: string;
+
+  @IsOptional()
+  @IsDate()
+  readonly birthday: Date;
+
+  @IsOptional()
+  @IsString()
+  readonly address: string;
+
+  @IsOptional()
+  @IsString()
+  readonly status: string;
 
   @IsOptional()
   @IsString()
