@@ -122,6 +122,20 @@ export class AuthService {
       attributes: {
         exclude: ['updatedAt', 'createdAt', 'password'],
       },
+      include: [
+        {
+          model: RoleEntity,
+          attributes: ['id', 'name', 'code'],
+          include: [
+            {
+              model: PermissionEntity,
+              as: 'permissions',
+              attributes: ['id', 'code', 'name'],
+              through: { attributes: [] },
+            },
+          ],
+        },
+      ],
     });
     if (!user) throw new BadRequestException('Người dùng không tồn tại!');
 
@@ -133,16 +147,7 @@ export class AuthService {
       fullName: user.fullName,
       phoneNumber: user.phoneNumber,
       status: user.status,
-      role: {
-        id: user.role.id,
-        name: user.role.name,
-        code: user.role.code,
-        permissions: user.role.permissions.map((permission) => ({
-          id: permission.id,
-          name: permission.name,
-          code: permission.code,
-        })),
-      },
+      role: user.role,
       accessToken,
     };
   }
